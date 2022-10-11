@@ -1,5 +1,6 @@
 package com.ombdev.inventorysystemapi.model;
 
+import com.ombdev.inventorysystemapi.response.RoleResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,4 +21,12 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new TreeSet<>();
+
+    public static RoleResponse toRoleResponse(Role role){
+        if (role == null) return null;
+        return new RoleResponse(
+                role.getId(),
+                role.getRoleName()
+        );
+    }
 }
