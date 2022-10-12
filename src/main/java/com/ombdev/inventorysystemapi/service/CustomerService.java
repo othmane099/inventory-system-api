@@ -2,12 +2,7 @@ package com.ombdev.inventorysystemapi.service;
 
 import com.ombdev.inventorysystemapi.model.Customer;
 import com.ombdev.inventorysystemapi.repository.CustomerRepository;
-import com.ombdev.inventorysystemapi.request.DeleteRequest;
-import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.customer.CreateCustomerRequest;
-import com.ombdev.inventorysystemapi.request.customer.UpdateCustomerRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.customer.CreateCustomerResponse;
 import com.ombdev.inventorysystemapi.response.customer.CustomerResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,24 +23,21 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
-    public CreateCustomerResponse createCustomer(CreateCustomerRequest request){
-        Customer customer = CreateCustomerRequest.toEntity(request);
-        customer.setPurchases(0);
-        return Customer.toCreateCustomerResponse(customerRepository.save(customer));
-    }
-
-    public CustomerResponse show(ShowRequest request){
-        Customer customer = customerRepository.findById(request.id()).get();
-        return Customer.toCustomerResponse(customer);
-    }
-
-    public CustomerResponse update(UpdateCustomerRequest request) {
-        Customer customer = UpdateCustomerRequest.toEntity(request);
+    public CustomerResponse createCustomer(Customer customer){
         return Customer.toCustomerResponse(customerRepository.save(customer));
     }
 
-    public DeleteResponse delete(DeleteRequest request) {
-        customerRepository.deleteById(request.id());
+    public CustomerResponse show(Long id){
+        Customer customer = customerRepository.findById(id).get();
+        return Customer.toCustomerResponse(customer);
+    }
+
+    public CustomerResponse update(Customer customer) {
+        return Customer.toCustomerResponse(customerRepository.save(customer));
+    }
+
+    public DeleteResponse delete(Long id) {
+        customerRepository.deleteById(id);
         return new DeleteResponse("Customer deleted successfully :)");
     }
 }

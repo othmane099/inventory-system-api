@@ -4,10 +4,8 @@ import com.ombdev.inventorysystemapi.model.Product;
 import com.ombdev.inventorysystemapi.repository.ProductRepository;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.product.CreateProductRequest;
-import com.ombdev.inventorysystemapi.request.product.UpdateProductRequest;
+import com.ombdev.inventorysystemapi.request.product.ProductRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.product.CreateProductResponse;
 import com.ombdev.inventorysystemapi.response.product.ProductResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,8 +26,8 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductResponse create(CreateProductRequest request){
-        Product product = CreateProductRequest.toEntity(request);
+    public ProductResponse create(ProductRequest request){
+        Product product = ProductRequest.toEntity(request);
         return Product.toProductResponse(productRepository.save(product));
     }
 
@@ -38,8 +36,8 @@ public class ProductService {
         return Product.toProductResponse(product);
     }
 
-    public ProductResponse update(UpdateProductRequest request) {
-        Product product = UpdateProductRequest.toEntity(request);
+    public ProductResponse update(ProductRequest request) {
+        Product product = ProductRequest.toEntity(request);
         return Product.toProductResponse(productRepository.save(product));
     }
 

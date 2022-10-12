@@ -1,9 +1,6 @@
 package com.ombdev.inventorysystemapi.model;
 
 import com.ombdev.inventorysystemapi.response.category.CategoryResponse;
-import com.ombdev.inventorysystemapi.response.category.CreateCategoryResponse;
-import com.ombdev.inventorysystemapi.response.customer.CreateCustomerResponse;
-import com.ombdev.inventorysystemapi.response.customer.CustomerResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,6 +19,7 @@ public class Category {
     private Long id;
 
     private String name;
+    private String slug;
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime created_at;
@@ -36,20 +34,12 @@ public class Category {
                 '}';
     }
 
-    public static CreateCategoryResponse toCreateCategoryResponse(Category category){
-        if (category == null) return null;
-        return new CreateCategoryResponse(
-                category.getId(),
-                category.getName(),
-                category.getCreated_at()
-        );
-    }
-
     public static CategoryResponse toCategoryResponse(Category category){
         if (category == null) return null;
         return new CategoryResponse(
                 category.getId(),
                 category.getName(),
+                category.getSlug(),
                 category.getCreated_at()
         );
     }

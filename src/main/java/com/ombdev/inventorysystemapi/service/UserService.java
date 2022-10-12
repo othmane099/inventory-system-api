@@ -4,9 +4,7 @@ import com.ombdev.inventorysystemapi.model.User;
 import com.ombdev.inventorysystemapi.repository.UserRepository;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.user.CreateUserRequest;
-import com.ombdev.inventorysystemapi.request.user.UpdateUserRequest;
-import com.ombdev.inventorysystemapi.response.user.CreateUserResponse;
+import com.ombdev.inventorysystemapi.request.user.UserRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.user.UserResponse;
 import lombok.AllArgsConstructor;
@@ -21,13 +19,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public CreateUserResponse createUser(CreateUserRequest request){
-        User user = CreateUserRequest.toEntity(request);
+    public UserResponse create(User user){
         user.setStatus(false);
-        return User.toCreateUserResponse(userRepository.save(user));
+        return User.toUserResponse(userRepository.save(user));
     }
 
-    public List<UserResponse> getUsers(){
+    public List<UserResponse> index(){
 
         return userRepository.findAll()
                 .stream()
@@ -35,18 +32,17 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserResponse updateUser(UpdateUserRequest request) {
-        User user = UpdateUserRequest.toEntity(request);
+    public UserResponse update(User user) {
         return User.toUserResponse(userRepository.save(user));
     }
 
-    public DeleteResponse delete(DeleteRequest request) {
-        userRepository.deleteById(request.id());
+    public DeleteResponse delete(Long id) {
+        userRepository.deleteById(id);
         return new DeleteResponse("User deleted successfully :)");
     }
 
-    public UserResponse showUser(ShowRequest request) {
-        User user = userRepository.findById(request.id()).get();
+    public UserResponse show(Long id) {
+        User user = userRepository.findById(id).get();
         return User.toUserResponse(user);
     }
 }

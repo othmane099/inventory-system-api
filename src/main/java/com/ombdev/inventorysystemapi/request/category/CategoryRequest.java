@@ -1,10 +1,13 @@
 package com.ombdev.inventorysystemapi.request.category;
 
 import com.ombdev.inventorysystemapi.model.Category;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 
-public record CategoryRequest(Long id, String name, LocalDateTime created_at) {
+@Validated
+public record CategoryRequest(Long id, String name, String slug, LocalDateTime created_at) {
+
 
     public static Category toEntity(CategoryRequest request){
         if (request == null) return null;

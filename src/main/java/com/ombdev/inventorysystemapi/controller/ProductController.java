@@ -2,10 +2,8 @@ package com.ombdev.inventorysystemapi.controller;
 
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.product.CreateProductRequest;
-import com.ombdev.inventorysystemapi.request.product.UpdateProductRequest;
+import com.ombdev.inventorysystemapi.request.product.ProductRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.product.CreateProductResponse;
 import com.ombdev.inventorysystemapi.response.product.ProductResponse;
 import com.ombdev.inventorysystemapi.service.ProductService;
 import lombok.AllArgsConstructor;
@@ -25,12 +23,12 @@ public class ProductController {
     }
 
     @PostMapping("/special/products/create")
-    public ProductResponse create(@RequestBody CreateProductRequest request){
+    public ProductResponse create(@RequestBody ProductRequest request){
         return productService.create(request);
     }
 
     @GetMapping("/special/products/show")
-    public ProductResponse show(ShowRequest request){
+    public ProductResponse show(@RequestBody ShowRequest request){
         return productService.show(request);
     }
 
@@ -40,7 +38,7 @@ public class ProductController {
     }
 
     @PutMapping("/special/products/update")
-    public ProductResponse update(@RequestBody UpdateProductRequest request){
+    public ProductResponse update(@RequestBody ProductRequest request){
         return productService.update(request);
     }
 }

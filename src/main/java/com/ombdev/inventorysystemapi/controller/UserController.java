@@ -2,9 +2,7 @@ package com.ombdev.inventorysystemapi.controller;
 
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.user.CreateUserRequest;
-import com.ombdev.inventorysystemapi.request.user.UpdateUserRequest;
-import com.ombdev.inventorysystemapi.response.user.CreateUserResponse;
+import com.ombdev.inventorysystemapi.request.user.UserRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.user.UserResponse;
 import com.ombdev.inventorysystemapi.service.UserService;
@@ -21,27 +19,27 @@ public class UserController {
 
     @GetMapping("/admin/users")
     public List<UserResponse> index(){
-        return userService.getUsers();
+        return userService.index();
     }
 
     @GetMapping("/admin/users/show")
     public UserResponse show(@RequestBody ShowRequest request){
-        return userService.showUser(request);
+        return userService.show(request.id());
     }
 
     @PostMapping("/admin/users/create")
-    public CreateUserResponse create(@RequestBody CreateUserRequest request){
-        return userService.createUser(request);
+    public UserResponse create(@RequestBody UserRequest request){
+        return userService.create(UserRequest.toEntity(request));
     }
 
     @PutMapping("/admin/users/update")
-    public UserResponse update(@RequestBody UpdateUserRequest request){
-        return userService.updateUser(request);
+    public UserResponse update(@RequestBody UserRequest request){
+        return userService.update(UserRequest.toEntity(request));
     }
 
     @DeleteMapping("/admin/users/delete")
     public DeleteResponse delete(@RequestBody DeleteRequest request){
-        return userService.delete(request);
+        return userService.delete(request.id());
     }
 
 }

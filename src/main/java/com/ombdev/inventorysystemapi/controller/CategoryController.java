@@ -2,10 +2,8 @@ package com.ombdev.inventorysystemapi.controller;
 
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.category.CreateCategoryRequest;
-import com.ombdev.inventorysystemapi.request.category.UpdateCategoryRequest;
+import com.ombdev.inventorysystemapi.request.category.CategoryRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.category.CreateCategoryResponse;
 import com.ombdev.inventorysystemapi.response.category.CategoryResponse;
 import com.ombdev.inventorysystemapi.service.CategoryService;
 import lombok.AllArgsConstructor;
@@ -25,22 +23,22 @@ public class CategoryController {
     }
 
     @PostMapping("/special/categories/create")
-    public CreateCategoryResponse create(@RequestBody CreateCategoryRequest request){
-        return categoryService.create(request);
+    public CategoryResponse create(@RequestBody CategoryRequest request){
+        return categoryService.create(CategoryRequest.toEntity(request));
     }
 
     @GetMapping("/special/categories/show")
-    public CategoryResponse show(ShowRequest request){
-        return categoryService.show(request);
+    public CategoryResponse show(@RequestBody ShowRequest request){
+        return categoryService.show(request.id());
     }
 
     @DeleteMapping("/special/categories/delete")
     public DeleteResponse delete(@RequestBody DeleteRequest request){
-        return categoryService.delete(request);
+        return categoryService.delete(request.id());
     }
 
     @PutMapping("/special/categories/update")
-    public CategoryResponse update(@RequestBody UpdateCategoryRequest request){
-        return categoryService.update(request);
+    public CategoryResponse update(@RequestBody CategoryRequest request){
+        return categoryService.update(CategoryRequest.toEntity(request));
     }
 }

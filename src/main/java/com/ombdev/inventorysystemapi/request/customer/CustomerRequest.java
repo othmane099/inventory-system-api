@@ -4,7 +4,7 @@ import com.ombdev.inventorysystemapi.model.Customer;
 
 import java.time.LocalDateTime;
 
-public record CustomerRequest(Long id, String fullName, String email, String phone, String address, Integer purchases,
+public record CustomerRequest(Long id, String slug, String fullName, String email, String phone, String address, Integer purchases,
                               LocalDateTime lastPurchase, LocalDateTime created_at) {
 
 

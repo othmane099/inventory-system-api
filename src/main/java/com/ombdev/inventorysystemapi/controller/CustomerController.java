@@ -2,10 +2,8 @@ package com.ombdev.inventorysystemapi.controller;
 
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.customer.CreateCustomerRequest;
-import com.ombdev.inventorysystemapi.request.customer.UpdateCustomerRequest;
+import com.ombdev.inventorysystemapi.request.customer.CustomerRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.customer.CreateCustomerResponse;
 import com.ombdev.inventorysystemapi.response.customer.CustomerResponse;
 import com.ombdev.inventorysystemapi.service.CustomerService;
 import lombok.AllArgsConstructor;
@@ -25,22 +23,22 @@ public class CustomerController {
     }
 
     @PostMapping("/seller/customers/create")
-    public CreateCustomerResponse create(@RequestBody CreateCustomerRequest request){
-        return customerService.createCustomer(request);
+    public CustomerResponse create(@RequestBody CustomerRequest request){
+        return customerService.createCustomer(CustomerRequest.toEntity(request));
     }
 
     @GetMapping("/seller/customers/show")
-    public CustomerResponse show(ShowRequest request){
-        return customerService.show(request);
+    public CustomerResponse show(@RequestBody ShowRequest request){
+        return customerService.show(request.id());
     }
 
     @DeleteMapping("/seller/customers/delete")
     public DeleteResponse delete(@RequestBody DeleteRequest request){
-        return customerService.delete(request);
+        return customerService.delete(request.id());
     }
 
     @PutMapping("/seller/customers/update")
-    public CustomerResponse update(@RequestBody UpdateCustomerRequest request){
-        return customerService.update(request);
+    public CustomerResponse update(@RequestBody CustomerRequest request){
+        return customerService.update(CustomerRequest.toEntity(request));
     }
 }

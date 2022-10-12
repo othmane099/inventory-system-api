@@ -4,11 +4,9 @@ import com.ombdev.inventorysystemapi.model.Category;
 import com.ombdev.inventorysystemapi.repository.CategoryRepository;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.category.CreateCategoryRequest;
-import com.ombdev.inventorysystemapi.request.category.UpdateCategoryRequest;
+import com.ombdev.inventorysystemapi.request.category.CategoryRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.category.CategoryResponse;
-import com.ombdev.inventorysystemapi.response.category.CreateCategoryResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,23 +27,21 @@ public class CategoryService {
 
     }
 
-    public CreateCategoryResponse create(CreateCategoryRequest request){
-        Category category = CreateCategoryRequest.toEntity(request);
-        return Category.toCreateCategoryResponse(categoryRepository.save(category));
-    }
-
-    public CategoryResponse show(ShowRequest request){
-        Category category = categoryRepository.findById(request.id()).get();
-        return Category.toCategoryResponse(category);
-    }
-
-    public CategoryResponse update(UpdateCategoryRequest request){
-        Category category = UpdateCategoryRequest.toEntity(request);
+    public CategoryResponse create(Category category){
         return Category.toCategoryResponse(categoryRepository.save(category));
     }
 
-    public DeleteResponse delete(DeleteRequest request){
-        categoryRepository.deleteById(request.id());
+    public CategoryResponse show(Long id){
+        Category category = categoryRepository.findById(id).get();
+        return Category.toCategoryResponse(category);
+    }
+
+    public CategoryResponse update(Category category){
+        return Category.toCategoryResponse(categoryRepository.save(category));
+    }
+
+    public DeleteResponse delete(Long id){
+        categoryRepository.deleteById(id);
         return new DeleteResponse("Category deleted successfully :)");
     }
 }

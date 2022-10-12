@@ -1,7 +1,6 @@
 package com.ombdev.inventorysystemapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ombdev.inventorysystemapi.response.user.CreateUserResponse;
 import com.ombdev.inventorysystemapi.response.user.UserResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +20,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String slug;
 
     private String fullName;
     @Column(unique = true)
@@ -49,26 +49,12 @@ public class User {
                 '}';
     }
 
-    public static CreateUserResponse toCreateUserResponse(User user){
-        if (user == null) return null;
-        return new CreateUserResponse(
-                user.getId(),
-                user.getFullName(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getStatus(),
-                user.getCreated_at(),
-                user.getRoles() != null ?
-                        user.getRoles().stream()
-                                .map(Role::toRoleResponse)
-                                .collect(Collectors.toSet()) : null
-        );
-    }
 
     public static UserResponse toUserResponse(User user){
         if (user == null) return null;
         return new UserResponse(
                 user.getId(),
+                user.getSlug(),
                 user.getFullName(),
                 user.getUsername(),
                 user.getPassword(),

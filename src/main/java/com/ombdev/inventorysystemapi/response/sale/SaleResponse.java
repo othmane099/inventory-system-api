@@ -1,11 +1,14 @@
 package com.ombdev.inventorysystemapi.response.sale;
 
 import com.ombdev.inventorysystemapi.model.PaymentMethod;
+import com.ombdev.inventorysystemapi.response.customer.CustomerResponse;
+import com.ombdev.inventorysystemapi.response.product.ProductResponse;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 public record SaleResponse(
         Long id, String code, Double tax, Double netPrice, Double totalPrice,
-        PaymentMethod paymentMethod, LocalDateTime created_at
+        PaymentMethod paymentMethod, LocalDateTime created_at, Set<ProductResponse> products, CustomerResponse customer
 ) {
 }

@@ -8,14 +8,16 @@ import com.ombdev.inventorysystemapi.request.product.ProductRequest;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record CreateSaleRequest(
-        String code, Double tax, Double netPrice, Double totalPrice, PaymentMethod paymentMethod,
+public record SaleRequest(
+        Long id, String code, Double tax, Double netPrice, Double totalPrice, PaymentMethod paymentMethod,
         Set<ProductRequest> products, CustomerRequest customer
+
 ) {
 
-    public static Sale toEntity(CreateSaleRequest request){
+    public static Sale toEntity(SaleRequest request){
         if (request == null) return null;
         Sale sale = new Sale();
+        sale.setId(request.id());
         sale.setCode(request.code());
         sale.setTax(request.tax());
         sale.setNetPrice(request.netPrice());
@@ -26,7 +28,6 @@ public record CreateSaleRequest(
                 request.products().stream()
                         .map(ProductRequest::toEntity)
                         .collect(Collectors.toSet()) : null);
-        
         return sale;
     }
 }

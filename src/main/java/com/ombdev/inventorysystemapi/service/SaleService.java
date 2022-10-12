@@ -4,10 +4,8 @@ import com.ombdev.inventorysystemapi.model.Sale;
 import com.ombdev.inventorysystemapi.repository.SaleRepository;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.sale.CreateSaleRequest;
-import com.ombdev.inventorysystemapi.request.sale.UpdateSaleRequest;
+import com.ombdev.inventorysystemapi.request.sale.SaleRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.sale.CreateSaleResponse;
 import com.ombdev.inventorysystemapi.response.sale.SaleResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,23 +26,21 @@ public class SaleService {
                 .collect(Collectors.toList());
     }
 
-    public CreateSaleResponse create(CreateSaleRequest request){
-        Sale sale = CreateSaleRequest.toEntity(request);
-        return Sale.toCreateSaleResponse(saleRepository.save(sale));
-    }
-
-    public SaleResponse show(ShowRequest request){
-        Sale sale = saleRepository.findById(request.id()).get();
-        return Sale.toSaleResponse(sale);
-    }
-
-    public SaleResponse update(UpdateSaleRequest request) {
-        Sale sale = UpdateSaleRequest.toEntity(request);
+    public SaleResponse create(Sale sale){
         return Sale.toSaleResponse(saleRepository.save(sale));
     }
 
-    public DeleteResponse delete(DeleteRequest request) {
-        saleRepository.deleteById(request.id());
+    public SaleResponse show(Long id){
+        Sale sale = saleRepository.findById(id).get();
+        return Sale.toSaleResponse(sale);
+    }
+
+    public SaleResponse update(Sale sale) {
+        return Sale.toSaleResponse(saleRepository.save(sale));
+    }
+
+    public DeleteResponse delete(Long id) {
+        saleRepository.deleteById(id);
         return new DeleteResponse("Sale deleted successfully :)");
     }
 }

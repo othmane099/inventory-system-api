@@ -1,11 +1,10 @@
 package com.ombdev.inventorysystemapi.controller;
 
+import com.ombdev.inventorysystemapi.model.Sale;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.sale.CreateSaleRequest;
-import com.ombdev.inventorysystemapi.request.sale.UpdateSaleRequest;
+import com.ombdev.inventorysystemapi.request.sale.SaleRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.sale.CreateSaleResponse;
 import com.ombdev.inventorysystemapi.response.sale.SaleResponse;
 import com.ombdev.inventorysystemapi.service.SaleService;
 import lombok.AllArgsConstructor;
@@ -25,22 +24,22 @@ public class SaleController {
     }
 
     @PostMapping("/seller/sales/create")
-    public CreateSaleResponse create(@RequestBody CreateSaleRequest request){
-        return saleService.create(request);
+    public SaleResponse create(@RequestBody SaleRequest request){
+        return saleService.create(SaleRequest.toEntity(request));
     }
 
     @GetMapping("/seller/sales/show")
-    public SaleResponse show(ShowRequest request){
-        return saleService.show(request);
+    public SaleResponse show(@RequestBody ShowRequest request){
+        return saleService.show(request.id());
     }
 
     @DeleteMapping("/seller/sales/delete")
     public DeleteResponse delete(@RequestBody DeleteRequest request){
-        return saleService.delete(request);
+        return saleService.delete(request.id());
     }
 
     @PutMapping("/seller/sales/update")
-    public SaleResponse update(@RequestBody UpdateSaleRequest request){
-        return saleService.update(request);
+    public SaleResponse update(@RequestBody SaleRequest request){
+        return saleService.update(SaleRequest.toEntity(request));
     }
 }

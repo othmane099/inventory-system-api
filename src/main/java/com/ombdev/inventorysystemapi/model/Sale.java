@@ -1,6 +1,5 @@
 package com.ombdev.inventorysystemapi.model;
 
-import com.ombdev.inventorysystemapi.response.sale.CreateSaleResponse;
 import com.ombdev.inventorysystemapi.response.sale.SaleResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter @Setter
@@ -41,19 +41,6 @@ public class Sale {
     private Customer customer;
 
 
-    public static CreateSaleResponse toCreateSaleResponse(Sale sale){
-        if (sale == null) return null;
-        return new CreateSaleResponse(
-                sale.getId(),
-                sale.getCode(),
-                sale.getTax(),
-                sale.getNetPrice(),
-                sale.getTotalPrice(),
-                sale.getPaymentMethod(),
-                sale.getCreated_at()
-        );
-    }
-
     public static SaleResponse toSaleResponse(Sale sale){
         if (sale == null) return null;
         return new SaleResponse(
@@ -63,7 +50,13 @@ public class Sale {
                 sale.getNetPrice(),
                 sale.getTotalPrice(),
                 sale.getPaymentMethod(),
-                sale.getCreated_at()
+                sale.getCreated_at(),
+                sale.getProducts() != null ?
+                        sale.getProducts().stream()
+                                .map(Product::toProductResponse)
+                                .collect(Collectors.toSet()) : null,
+                Customer.toCustomerResponse(sale.getCustomer())
+
         );
     }
 
