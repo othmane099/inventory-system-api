@@ -1,8 +1,8 @@
 package com.ombdev.inventorysystemapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ombdev.inventorysystemapi.response.CreateUserResponse;
-import com.ombdev.inventorysystemapi.response.UserResponse;
+import com.ombdev.inventorysystemapi.response.user.CreateUserResponse;
+import com.ombdev.inventorysystemapi.response.user.UserResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;

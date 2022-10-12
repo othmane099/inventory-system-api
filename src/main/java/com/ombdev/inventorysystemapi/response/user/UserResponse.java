@@ -1,13 +1,17 @@
-package com.ombdev.inventorysystemapi.response;
+package com.ombdev.inventorysystemapi.response.user;
+
+import com.ombdev.inventorysystemapi.response.role.RoleResponse;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-public record CreateUserResponse(Long id,
+public record UserResponse(Long id,
                            String fullName,
                            String username,
                            String password,
+                           String photo,
                            Boolean status,
+                           LocalDateTime lastLogin,
                            LocalDateTime created_at,
                            Set<RoleResponse> roles) {
 }

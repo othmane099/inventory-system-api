@@ -2,13 +2,13 @@ package com.ombdev.inventorysystemapi.service;
 
 import com.ombdev.inventorysystemapi.model.User;
 import com.ombdev.inventorysystemapi.repository.UserRepository;
-import com.ombdev.inventorysystemapi.request.CreateUserRequest;
-import com.ombdev.inventorysystemapi.request.DeleteUserRequest;
-import com.ombdev.inventorysystemapi.request.ShowUserRequest;
-import com.ombdev.inventorysystemapi.request.UpdateUserRequest;
-import com.ombdev.inventorysystemapi.response.CreateUserResponse;
+import com.ombdev.inventorysystemapi.request.DeleteRequest;
+import com.ombdev.inventorysystemapi.request.ShowRequest;
+import com.ombdev.inventorysystemapi.request.user.CreateUserRequest;
+import com.ombdev.inventorysystemapi.request.user.UpdateUserRequest;
+import com.ombdev.inventorysystemapi.response.user.CreateUserResponse;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.UserResponse;
+import com.ombdev.inventorysystemapi.response.user.UserResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,12 +40,12 @@ public class UserService {
         return User.toUserResponse(userRepository.save(user));
     }
 
-    public DeleteResponse delete(DeleteUserRequest request) {
+    public DeleteResponse delete(DeleteRequest request) {
         userRepository.deleteById(request.id());
         return new DeleteResponse("User deleted successfully :)");
     }
 
-    public UserResponse showUser(ShowUserRequest request) {
+    public UserResponse showUser(ShowRequest request) {
         User user = userRepository.findById(request.id()).get();
         return User.toUserResponse(user);
     }

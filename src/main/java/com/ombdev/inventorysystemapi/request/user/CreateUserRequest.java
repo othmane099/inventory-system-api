@@ -1,7 +1,7 @@
-package com.ombdev.inventorysystemapi.request;
+package com.ombdev.inventorysystemapi.request.user;
 
-import com.ombdev.inventorysystemapi.model.Role;
 import com.ombdev.inventorysystemapi.model.User;
+import com.ombdev.inventorysystemapi.request.role.RoleRequest;
 
 import java.util.Set;
 import java.util.stream.Collectors;

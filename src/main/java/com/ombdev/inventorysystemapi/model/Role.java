@@ -1,6 +1,6 @@
 package com.ombdev.inventorysystemapi.model;
 
-import com.ombdev.inventorysystemapi.response.RoleResponse;
+import com.ombdev.inventorysystemapi.response.role.RoleResponse;
 import lombok.Getter;
 import lombok.Setter;
 

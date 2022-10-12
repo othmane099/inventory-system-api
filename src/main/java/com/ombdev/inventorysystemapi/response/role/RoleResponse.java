@@ -1,4 +1,4 @@
-package com.ombdev.inventorysystemapi.response;
+package com.ombdev.inventorysystemapi.response.role;
 
 import com.ombdev.inventorysystemapi.model.RoleName;
 

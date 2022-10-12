@@ -1,4 +1,4 @@
 package com.ombdev.inventorysystemapi.request;
 
-public record ShowUserRequest(Long id) {
+public record DeleteRequest(Long id) {
 }

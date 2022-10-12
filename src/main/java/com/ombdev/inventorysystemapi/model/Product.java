@@ -1,5 +1,9 @@
 package com.ombdev.inventorysystemapi.model;
 
+import com.ombdev.inventorysystemapi.request.category.CategoryRequest;
+import com.ombdev.inventorysystemapi.response.category.CategoryResponse;
+import com.ombdev.inventorysystemapi.response.product.CreateProductResponse;
+import com.ombdev.inventorysystemapi.response.product.ProductResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter @Setter
@@ -37,6 +42,40 @@ public class Product {
 
     @ManyToMany(mappedBy = "products")
     private Set<Sale> sales = new HashSet<>();
+
+    public static CreateProductResponse toCreateProductResponse(Product product){
+        if (product == null) return null;
+        return new CreateProductResponse(
+                product.getId(),
+                product.getCode(),
+                product.getDescription(),
+                product.getQuantity(),
+                product.getBuyingPrice(),
+                product.getSellingPrice(),
+                product.getCreated_at(),
+                product.getCategories() != null ?
+                        product.getCategories().stream()
+                                .map(Category::toCategoryResponse)
+                                .collect(Collectors.toSet()) : null
+        );
+    }
+
+    public static ProductResponse toProductResponse(Product product){
+        if (product == null) return null;
+        return new ProductResponse(
+                product.getId(),
+                product.getCode(),
+                product.getDescription(),
+                product.getQuantity(),
+                product.getBuyingPrice(),
+                product.getSellingPrice(),
+                product.getCreated_at(),
+                product.getCategories() != null ?
+                        product.getCategories().stream()
+                                .map(Category::toCategoryResponse)
+                                .collect(Collectors.toSet()) : null
+        );
+    }
 
 
 }

@@ -1,9 +1,7 @@
 package com.ombdev.inventorysystemapi.controller;
 
-import com.ombdev.inventorysystemapi.request.CreateRoleRequest;
-import com.ombdev.inventorysystemapi.request.CreateUserRequest;
-import com.ombdev.inventorysystemapi.response.RoleResponse;
-import com.ombdev.inventorysystemapi.response.UserResponse;
+import com.ombdev.inventorysystemapi.request.role.CreateRoleRequest;
+import com.ombdev.inventorysystemapi.response.role.RoleResponse;
 import com.ombdev.inventorysystemapi.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

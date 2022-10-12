@@ -1,12 +1,12 @@
 package com.ombdev.inventorysystemapi.controller;
 
-import com.ombdev.inventorysystemapi.request.CreateUserRequest;
-import com.ombdev.inventorysystemapi.request.DeleteUserRequest;
-import com.ombdev.inventorysystemapi.request.ShowUserRequest;
-import com.ombdev.inventorysystemapi.request.UpdateUserRequest;
-import com.ombdev.inventorysystemapi.response.CreateUserResponse;
+import com.ombdev.inventorysystemapi.request.DeleteRequest;
+import com.ombdev.inventorysystemapi.request.ShowRequest;
+import com.ombdev.inventorysystemapi.request.user.CreateUserRequest;
+import com.ombdev.inventorysystemapi.request.user.UpdateUserRequest;
+import com.ombdev.inventorysystemapi.response.user.CreateUserResponse;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
-import com.ombdev.inventorysystemapi.response.UserResponse;
+import com.ombdev.inventorysystemapi.response.user.UserResponse;
 import com.ombdev.inventorysystemapi.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/users/show")
-    public UserResponse show(@RequestBody ShowUserRequest request){
+    public UserResponse show(@RequestBody ShowRequest request){
         return userService.showUser(request);
     }
 
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @DeleteMapping("/admin/users/delete")
-    public DeleteResponse delete(@RequestBody DeleteUserRequest request){
+    public DeleteResponse delete(@RequestBody DeleteRequest request){
         return userService.delete(request);
     }
 

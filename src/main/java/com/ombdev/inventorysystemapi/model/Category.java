@@ -1,5 +1,9 @@
 package com.ombdev.inventorysystemapi.model;
 
+import com.ombdev.inventorysystemapi.response.category.CategoryResponse;
+import com.ombdev.inventorysystemapi.response.category.CreateCategoryResponse;
+import com.ombdev.inventorysystemapi.response.customer.CreateCustomerResponse;
+import com.ombdev.inventorysystemapi.response.customer.CustomerResponse;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,6 +28,31 @@ public class Category {
 
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new TreeSet<>();
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    public static CreateCategoryResponse toCreateCategoryResponse(Category category){
+        if (category == null) return null;
+        return new CreateCategoryResponse(
+                category.getId(),
+                category.getName(),
+                category.getCreated_at()
+        );
+    }
+
+    public static CategoryResponse toCategoryResponse(Category category){
+        if (category == null) return null;
+        return new CategoryResponse(
+                category.getId(),
+                category.getName(),
+                category.getCreated_at()
+        );
+    }
 
 
 }

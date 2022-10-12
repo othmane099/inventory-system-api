@@ -1,12 +1,9 @@
 package com.ombdev.inventorysystemapi.service;
 
 import com.ombdev.inventorysystemapi.model.Role;
-import com.ombdev.inventorysystemapi.model.User;
 import com.ombdev.inventorysystemapi.repository.RoleRepository;
-import com.ombdev.inventorysystemapi.request.CreateRoleRequest;
-import com.ombdev.inventorysystemapi.request.CreateUserRequest;
-import com.ombdev.inventorysystemapi.response.RoleResponse;
-import com.ombdev.inventorysystemapi.response.UserResponse;
+import com.ombdev.inventorysystemapi.request.role.CreateRoleRequest;
+import com.ombdev.inventorysystemapi.response.role.RoleResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
