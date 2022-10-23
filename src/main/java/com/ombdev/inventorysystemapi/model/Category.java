@@ -17,9 +17,8 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
-    private String slug;
+    private String categoryCode;
+    private String categoryName;
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime created_at;
@@ -30,7 +29,7 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "name='" + name + '\'' +
+                "name='" + categoryName + '\'' +
                 '}';
     }
 
@@ -38,9 +37,8 @@ public class Category {
         if (category == null) return null;
         return new CategoryResponse(
                 category.getId(),
-                category.getName(),
-                category.getSlug(),
-                category.getCreated_at()
+                category.getCategoryCode(),
+                category.getCategoryName()
         );
     }
 
