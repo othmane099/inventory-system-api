@@ -1,6 +1,7 @@
 package com.ombdev.inventorysystemapi.controller;
 
 import com.ombdev.inventorysystemapi.model.Category;
+import com.ombdev.inventorysystemapi.model.SortBy;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
 import com.ombdev.inventorysystemapi.request.category.CategoryRequest;
@@ -24,10 +25,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/special/categories")
-    public Page<CategoryResponse> index(@RequestParam(defaultValue = "") String keyword,
-                                        @RequestParam(defaultValue = "0") int page,
-                                        @RequestParam(defaultValue = "5") int size){
-        return categoryService.index(keyword, page, size);
+    public Page<CategoryResponse> index(@RequestParam String keyword,
+                                        @RequestParam int page,
+                                        @RequestParam int size,
+                                        @RequestParam SortBy sortBy){
+        System.out.println(sortBy);
+        return categoryService.index(keyword, page, size, sortBy);
     }
 
     @PostMapping("/special/categories/store")

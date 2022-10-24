@@ -1,6 +1,7 @@
 package com.ombdev.inventorysystemapi.service;
 
 import com.ombdev.inventorysystemapi.model.Category;
+import com.ombdev.inventorysystemapi.model.SortBy;
 import com.ombdev.inventorysystemapi.repository.CategoryRepository;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.category.CategoryResponse;
@@ -19,14 +20,33 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public Page<CategoryResponse> index(String keyword, int page, int size){
-        Page<Category> categoriesPage = categoryRepository.findAllByCategoryCodeContainingOrCategoryNameContainingOrderByIdDesc(keyword, keyword, PageRequest.of(page, size));
+
+    public Page<CategoryResponse> index(String keyword, int page, int size, SortBy sortBy){
+        Page<Category> categoriesPage;
+
+        switch (sortBy) {
+            case CATEGORY_CODE_ASC -> categoriesPage = categoryRepository
+                    .findAllByCategoryCodeContainingOrCategoryNameContainingOrderByCategoryCodeAsc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case CATEGORY_CODE_DESC -> categoriesPage = categoryRepository
+                    .findAllByCategoryCodeContainingOrCategoryNameContainingOrderByCategoryCodeDesc
+                    (keyword, keyword, PageRequest.of(page, size));
+            case CATEGORY_NAME_ASC -> categoriesPage = categoryRepository
+                    .findAllByCategoryCodeContainingOrCategoryNameContainingOrderByCategoryNameAsc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case CATEGORY_NAME_DESC -> categoriesPage = categoryRepository
+                    .findAllByCategoryCodeContainingOrCategoryNameContainingOrderByCategoryNameDesc
+                            (keyword, keyword, PageRequest.of(page, size));
+            default -> categoriesPage = categoryRepository
+                    .findAllByCategoryCodeContainingOrCategoryNameContainingOrderByIdDesc
+                            (keyword, keyword, PageRequest.of(page, size));
+        }
         List<CategoryResponse> categories = categoriesPage
                 .stream()
                 .map(Category::toCategoryResponse)
                 .collect(Collectors.toList());
 
-        return new PageImpl<CategoryResponse>(categories, PageRequest.of(page, size), categoriesPage.getTotalElements());
+        return new PageImpl<>(categories, PageRequest.of(page, size), categoriesPage.getTotalElements());
 
     }
 

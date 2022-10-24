@@ -10,5 +10,10 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Page<Category> findAll(Pageable pageable);
+
     Page<Category> findAllByCategoryCodeContainingOrCategoryNameContainingOrderByIdDesc(String categoryCode, String categoryName, Pageable pageable);
+    Page<Category> findAllByCategoryCodeContainingOrCategoryNameContainingOrderByCategoryCodeDesc(String categoryCode, String categoryName, Pageable pageable);
+    Page<Category> findAllByCategoryCodeContainingOrCategoryNameContainingOrderByCategoryNameDesc(String categoryCode, String categoryName, Pageable pageable);
+    Page<Category> findAllByCategoryCodeContainingOrCategoryNameContainingOrderByCategoryCodeAsc(String categoryCode, String categoryName, Pageable pageable);
+    Page<Category> findAllByCategoryCodeContainingOrCategoryNameContainingOrderByCategoryNameAsc(String categoryCode, String categoryName, Pageable pageable);
 }
