@@ -1,6 +1,5 @@
 package com.ombdev.inventorysystemapi.controller;
 
-import com.ombdev.inventorysystemapi.model.Category;
 import com.ombdev.inventorysystemapi.model.SortBy;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
@@ -13,7 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -7,6 +7,7 @@ import com.ombdev.inventorysystemapi.request.product.ProductRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.product.ProductResponse;
 import com.ombdev.inventorysystemapi.service.ProductService;
+import com.ombdev.inventorysystemapi.utils.Constants;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(Constants.CLIENT_BASE_URL)
 public class ProductController {
 
     private final ProductService productService;
