@@ -29,7 +29,6 @@ public class CategoryController {
                                         @RequestParam int page,
                                         @RequestParam int size,
                                         @RequestParam SortBy sortBy){
-        System.out.println(sortBy);
         return categoryService.index(keyword, page, size, sortBy);
     }
 

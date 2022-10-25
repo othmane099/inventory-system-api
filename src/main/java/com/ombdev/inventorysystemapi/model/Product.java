@@ -19,10 +19,9 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String slug;
 
-    private String code;
-    private String description;
+    private String productCode;
+    private String productName;
     private String photo;
     private Integer quantity;
     private Double buyingPrice;
@@ -45,9 +44,8 @@ public class Product {
         if (product == null) return null;
         return new ProductResponse(
                 product.getId(),
-                product.getSlug(),
-                product.getCode(),
-                product.getDescription(),
+                product.getProductCode(),
+                product.getProductName(),
                 product.getQuantity(),
                 product.getBuyingPrice(),
                 product.getSellingPrice(),
