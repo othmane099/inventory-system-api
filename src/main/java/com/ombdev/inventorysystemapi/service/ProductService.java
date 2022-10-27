@@ -43,7 +43,7 @@ public class ProductService {
                             (keyword, keyword, PageRequest.of(page, size));
         }
 
-        List<ProductResponse> products = productRepository.findAll()
+        List<ProductResponse> products = productsPage
                 .stream()
                 .map(Product::toProductResponse)
                 .collect(Collectors.toList());
@@ -73,5 +73,12 @@ public class ProductService {
     public DeleteResponse destroyAll(List<Long> products){
         productRepository.deleteAllById(products);
         return new DeleteResponse("Selected products deleted successfully :)");
+    }
+
+    public List<ProductResponse> getAll() {
+        return productRepository.findAll()
+                .stream()
+                .map(Product::toProductResponse)
+                .collect(Collectors.toList());
     }
 }

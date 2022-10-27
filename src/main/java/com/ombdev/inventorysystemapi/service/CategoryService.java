@@ -72,4 +72,11 @@ public class CategoryService {
         categoryRepository.deleteAllById(categories);
         return new DeleteResponse("Selected categories deleted successfully :)");
     }
+
+    public List<CategoryResponse> getAll() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(Category::toCategoryResponse)
+                .collect(Collectors.toList());
+    }
 }

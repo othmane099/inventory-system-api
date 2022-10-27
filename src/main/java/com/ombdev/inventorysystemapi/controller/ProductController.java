@@ -22,26 +22,33 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @GetMapping("/special/products/all")
+    public List<ProductResponse> allProducts(){
+        return productService.getAll();
+    }
+
+
     @GetMapping("/special/products")
     public Page<ProductResponse> index(@RequestParam String keyword,
                                        @RequestParam int page,
                                        @RequestParam int size,
                                        @RequestParam SortBy sortBy){
+        System.out.println(size);
         return productService.index(keyword, page, size, sortBy);
     }
 
-    @PostMapping("/special/products/create")
+    @PostMapping("/special/products/store")
     public ProductResponse store(@RequestBody ProductRequest request){
         return productService.store(ProductRequest.toEntity(request));
     }
 
     @GetMapping("/special/products/show")
-    public ProductResponse show(@RequestBody ShowRequest request){
-        return productService.show(request.id());
+    public ProductResponse show(@RequestParam("pid") Long prodId){
+        return productService.show(prodId);
     }
 
-    @DeleteMapping("/special/products/delete")
-    public DeleteResponse delete(@RequestBody DeleteRequest request){
+    @DeleteMapping("/special/products/destroy")
+    public DeleteResponse destroy(@RequestBody DeleteRequest request){
         return productService.destroy(request.id());
     }
 

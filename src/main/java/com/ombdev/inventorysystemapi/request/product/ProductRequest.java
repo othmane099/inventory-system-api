@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record ProductRequest(
-        Long id, String slug, String productConde, String productName, Integer quantity, Double buyingPrice,
+        Long id, String productCode, String productName, Integer quantity, Double buyingPrice,
         Double sellingPrice, Set<CategoryRequest> categories
 
 ) {
@@ -16,7 +16,7 @@ public record ProductRequest(
         if (request == null) return null;
         Product product = new Product();
         product.setId(request.id());
-        product.setProductCode(request.productConde());
+        product.setProductCode(request.productCode());
         product.setProductName(request.productName());
         product.setQuantity(request.quantity());
         product.setBuyingPrice(request.buyingPrice());

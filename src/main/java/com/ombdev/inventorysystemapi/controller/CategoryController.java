@@ -22,6 +22,11 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    @GetMapping("/special/categories/all")
+    public List<CategoryResponse> allCategories(){
+        return categoryService.getAll();
+    }
+
     @GetMapping("/special/categories")
     public Page<CategoryResponse> index(@RequestParam String keyword,
                                         @RequestParam int page,

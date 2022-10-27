@@ -44,16 +44,15 @@ public class Product {
         if (product == null) return null;
         return new ProductResponse(
                 product.getId(),
-                product.getProductCode(),
                 product.getProductName(),
-                product.getQuantity(),
-                product.getBuyingPrice(),
-                product.getSellingPrice(),
-                product.getCreated_at(),
+                product.getProductCode(),
                 product.getCategories() != null ?
                         product.getCategories().stream()
                                 .map(Category::toCategoryResponse)
-                                .collect(Collectors.toSet()) : null
+                                .collect(Collectors.toSet()) : null,
+                product.getSellingPrice(),
+                product.getBuyingPrice(),
+                product.getQuantity()
         );
     }
 
