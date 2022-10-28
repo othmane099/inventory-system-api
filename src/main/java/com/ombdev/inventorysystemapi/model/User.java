@@ -20,11 +20,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String slug;
-
     private String fullName;
     @Column(unique = true)
     private String username;
+    private String phone;
+    private String email;
     private String password;
     private String photo;
     private Boolean status;
@@ -54,14 +54,13 @@ public class User {
         if (user == null) return null;
         return new UserResponse(
                 user.getId(),
-                user.getSlug(),
                 user.getFullName(),
                 user.getUsername(),
+                user.getPhone(),
+                user.getEmail(),
                 user.getPassword(),
                 user.getPhoto(),
                 user.getStatus(),
-                user.getLastLogin(),
-                user.getCreated_at(),
                 user.getRoles() != null ?
                         user.getRoles().stream()
                                 .map(Role::toRoleResponse)
