@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record UserRequest(
-        Long id, String slug, String fullName, String username, String password, Boolean status, Set<RoleRequest> roles){
+        Long id, String fullName, String username, String email, String password, String phone, Boolean status, Set<RoleRequest> roles){
 
     public UserRequest {
         if (fullName.isBlank() || fullName == null){
@@ -22,6 +22,8 @@ public record UserRequest(
         user.setFullName(request.fullName());
         user.setUsername(request.username());
         user.setPassword(request.password());
+        user.setEmail(request.email());
+        user.setPhone(request.phone());
         user.setStatus(request.status());
         user.setRoles(request.roles() != null ?
                 request.roles().stream()

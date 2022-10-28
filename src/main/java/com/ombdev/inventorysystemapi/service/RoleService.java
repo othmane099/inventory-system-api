@@ -27,4 +27,12 @@ public class RoleService {
                 .map(Role::toRoleResponse)
                 .collect(Collectors.toList());
     }
+
+    public List<RoleResponse> getAll(){
+
+        return roleRepository.findAll()
+                .stream()
+                .map(Role::toRoleResponse)
+                .collect(Collectors.toList());
+    }
 }

@@ -33,7 +33,6 @@ public class ProductController {
                                        @RequestParam int page,
                                        @RequestParam int size,
                                        @RequestParam SortBy sortBy){
-        System.out.println(size);
         return productService.index(keyword, page, size, sortBy);
     }
 

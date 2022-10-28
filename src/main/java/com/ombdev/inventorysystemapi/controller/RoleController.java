@@ -3,16 +3,15 @@ package com.ombdev.inventorysystemapi.controller;
 import com.ombdev.inventorysystemapi.request.role.RoleRequest;
 import com.ombdev.inventorysystemapi.response.role.RoleResponse;
 import com.ombdev.inventorysystemapi.service.RoleService;
+import com.ombdev.inventorysystemapi.utils.Constants;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(Constants.CLIENT_BASE_URL)
 public class RoleController {
 
     private final RoleService roleService;
@@ -25,5 +24,10 @@ public class RoleController {
     @GetMapping("/admin/roles")
     public List<RoleResponse> index(){
         return roleService.index();
+    }
+
+    @GetMapping("/admin/roles/all")
+    public List<RoleResponse> allRoles(){
+        return roleService.getAll();
     }
 }

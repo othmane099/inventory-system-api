@@ -1,13 +1,13 @@
 package com.ombdev.inventorysystemapi.service;
 
+import com.ombdev.inventorysystemapi.model.SortBy;
 import com.ombdev.inventorysystemapi.model.User;
 import com.ombdev.inventorysystemapi.repository.UserRepository;
-import com.ombdev.inventorysystemapi.request.DeleteRequest;
-import com.ombdev.inventorysystemapi.request.ShowRequest;
-import com.ombdev.inventorysystemapi.request.user.UserRequest;
-import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.user.UserResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,30 +19,61 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserResponse create(User user){
+    public UserResponse store(User user){
         user.setStatus(false);
         return User.toUserResponse(userRepository.save(user));
     }
 
-    public List<UserResponse> index(){
+    public Page<UserResponse> index(String keyword, int page, int size, SortBy sortBy){
 
-        return userRepository.findAll()
+        Page<User> usersPage;
+
+        switch (sortBy){
+            case USER_FULL_NAME_ASC -> usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByFullNameAsc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case USER_FULL_NAME_DESC -> usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByFullNameDesc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case USER_USERNAME_ASC -> usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByUsernameAsc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case USER_USERNAME_DESC -> usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByUsernameDesc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case USER_EMAIL_ASC -> usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByEmailAsc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case USER_EMAIL_DESC -> usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByEmailDesc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case USER_PHONE_ASC -> usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByPhoneAsc
+                            (keyword, keyword, PageRequest.of(page, size));
+            case USER_PHONE_DESC -> usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByPhoneDesc
+                            (keyword, keyword, PageRequest.of(page, size));
+            default ->  usersPage = userRepository
+                    .findAllByFullNameContainingOrUsernameContainingOrderByIdDesc
+                            (keyword, keyword, PageRequest.of(page, size));
+        }
+
+        List<UserResponse> users = usersPage
                 .stream()
                 .map(User::toUserResponse)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(users, PageRequest.of(page, size), usersPage.getTotalElements());
     }
 
     public UserResponse update(User user) {
         return User.toUserResponse(userRepository.save(user));
     }
 
-    public DeleteResponse delete(Long id) {
-        userRepository.deleteById(id);
-        return new DeleteResponse("User deleted successfully :)");
-    }
-
     public UserResponse show(Long id) {
         User user = userRepository.findById(id).get();
         return User.toUserResponse(user);
     }
+
+
 }
