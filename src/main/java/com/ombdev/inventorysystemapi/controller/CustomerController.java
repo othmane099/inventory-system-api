@@ -1,30 +1,35 @@
 package com.ombdev.inventorysystemapi.controller;
 
+import com.ombdev.inventorysystemapi.model.SortBy;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
 import com.ombdev.inventorysystemapi.request.ShowRequest;
 import com.ombdev.inventorysystemapi.request.customer.CustomerRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.customer.CustomerResponse;
 import com.ombdev.inventorysystemapi.service.CustomerService;
+import com.ombdev.inventorysystemapi.utils.Constants;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(Constants.CLIENT_BASE_URL)
 public class CustomerController {
 
     private final CustomerService customerService;
 
     @GetMapping("/seller/customers")
-    public List<CustomerResponse> index(){
-        return customerService.index();
+    public Page<CustomerResponse> index(@RequestParam String keyword,
+                                        @RequestParam int page,
+                                        @RequestParam int size,
+                                        @RequestParam SortBy sortBy){
+        return customerService.index(keyword, page, size, sortBy);
     }
 
-    @PostMapping("/seller/customers/create")
-    public CustomerResponse create(@RequestBody CustomerRequest request){
-        return customerService.createCustomer(CustomerRequest.toEntity(request));
+    @PostMapping("/seller/customers/store")
+    public CustomerResponse store(@RequestBody CustomerRequest request){
+        return customerService.store(CustomerRequest.toEntity(request));
     }
 
     @GetMapping("/seller/customers/show")

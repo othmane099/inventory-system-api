@@ -17,8 +17,8 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String slug;
-
+    @Column(unique = true)
+    private String customerCode;
     private String fullName;
     @Column(unique = true)
     private String email;
@@ -50,7 +50,7 @@ public class Customer {
         if (customer == null) return null;
         return new CustomerResponse(
                 customer.getId(),
-                customer.getSlug(),
+                customer.getCustomerCode(),
                 customer.getFullName(),
                 customer.getEmail(),
                 customer.getPhone(),

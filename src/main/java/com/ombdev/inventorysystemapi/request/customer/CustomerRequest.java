@@ -4,7 +4,7 @@ import com.ombdev.inventorysystemapi.model.Customer;
 
 import java.time.LocalDateTime;
 
-public record CustomerRequest(Long id, String slug, String fullName, String email, String phone, String address, Integer purchases,
+public record CustomerRequest(Long id, String customerCode, String fullName, String email, String phone, String address, Integer purchases,
                               LocalDateTime lastPurchase, LocalDateTime created_at) {
 
 
@@ -13,6 +13,7 @@ public record CustomerRequest(Long id, String slug, String fullName, String emai
         if(request == null) return  null;
         Customer customer = new Customer();
         customer.setId(request.id());
+        customer.setCustomerCode(request.customerCode());
         customer.setFullName(request.fullName());
         customer.setEmail(request.email());
         customer.setPhone(request.phone());
