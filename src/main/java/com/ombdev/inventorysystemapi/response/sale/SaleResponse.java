@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public record SaleResponse(
-        Long id, String code, Double tax, Double netPrice, Double totalPrice,
-        PaymentMethod paymentMethod, LocalDateTime created_at, Set<ProductResponse> products, CustomerResponse customer
+        Long id, String saleCode, Double totalPrice, PaymentMethod paymentMethod,
+        LocalDateTime created_at, Set<ProductResponse> products, CustomerResponse customer
 ) {
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record SaleRequest(
-        Long id, String code, Double tax, Double netPrice, Double totalPrice, PaymentMethod paymentMethod,
+        Long id, String saleCode, Double totalPrice, PaymentMethod paymentMethod,
         Set<ProductRequest> products, CustomerRequest customer
 
 ) {
@@ -18,9 +18,7 @@ public record SaleRequest(
         if (request == null) return null;
         Sale sale = new Sale();
         sale.setId(request.id());
-        sale.setCode(request.code());
-        sale.setTax(request.tax());
-        sale.setNetPrice(request.netPrice());
+        sale.setSaleCode(request.saleCode());
         sale.setTotalPrice(request.totalPrice());
         sale.setPaymentMethod(request.paymentMethod());
         sale.setCustomer(CustomerRequest.toEntity(request.customer()));

@@ -27,6 +27,11 @@ public class ProductController {
         return productService.getAll();
     }
 
+    @GetMapping("/special/products/search")
+    public List<ProductResponse> allProductsByKeyword(@RequestParam String keyword){
+        return productService.getAllByKeyword(keyword);
+    }
+
 
     @GetMapping("/special/products")
     public Page<ProductResponse> index(@RequestParam String keyword,

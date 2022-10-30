@@ -81,4 +81,11 @@ public class ProductService {
                 .map(Product::toProductResponse)
                 .collect(Collectors.toList());
     }
+
+    public List<ProductResponse> getAllByKeyword(String keyword) {
+        return productRepository.findAllByProductCodeContainingOrProductNameContaining(keyword, keyword)
+                .stream()
+                .map(Product::toProductResponse)
+                .collect(Collectors.toList());
+    }
 }

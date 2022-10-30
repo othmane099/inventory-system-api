@@ -84,4 +84,11 @@ public class CustomerService {
         customerRepository.deleteById(id);
         return new DeleteResponse("Customer deleted successfully :)");
     }
+
+    public List<CustomerResponse> getAll() {
+        return customerRepository.findAll()
+                .stream()
+                .map(Customer::toCustomerResponse)
+                .collect(Collectors.toList());
+    }
 }

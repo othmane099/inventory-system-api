@@ -20,7 +20,7 @@ public class Sale {
     private Long id;
 
     @Column(unique = true)
-    private String code;
+    private String saleCode;
     private Double tax;
     private Double netPrice;
     private Double totalPrice;
@@ -45,9 +45,7 @@ public class Sale {
         if (sale == null) return null;
         return new SaleResponse(
                 sale.getId(),
-                sale.getCode(),
-                sale.getTax(),
-                sale.getNetPrice(),
+                sale.getSaleCode(),
                 sale.getTotalPrice(),
                 sale.getPaymentMethod(),
                 sale.getCreated_at(),

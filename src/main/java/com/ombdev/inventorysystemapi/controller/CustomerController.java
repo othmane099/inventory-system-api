@@ -12,12 +12,19 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @CrossOrigin(Constants.CLIENT_BASE_URL)
 public class CustomerController {
 
     private final CustomerService customerService;
+
+    @GetMapping("/seller/customers/all")
+    public List<CustomerResponse> allCustomers(){
+        return customerService.getAll();
+    }
 
     @GetMapping("/seller/customers")
     public Page<CustomerResponse> index(@RequestParam String keyword,
