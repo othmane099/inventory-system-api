@@ -1,5 +1,6 @@
 package com.ombdev.inventorysystemapi.service;
 
+import com.ombdev.inventorysystemapi.model.Product;
 import com.ombdev.inventorysystemapi.model.Sale;
 import com.ombdev.inventorysystemapi.model.SoldProduct;
 import com.ombdev.inventorysystemapi.model.SortBy;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
@@ -21,10 +23,12 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class SaleService {
 
     private final SaleRepository saleRepository;
     private final SoldProductRepository soldProductRepository;
+    private final ProductService productService;
 
     public Page<SaleResponse> index(String keyword, int page, int size, SortBy sortBy){
 
@@ -45,6 +49,10 @@ public class SaleService {
         sale.getSoldProducts().forEach(sp -> {
             sp.setSale(savedSale);
             soldProductRepository.save(sp);
+            Product p = sp.getProduct();
+            int subQuantity = sp.getProduct().getQuantity() - sp.getQuantityTaken();
+            p.setQuantity(subQuantity);
+            productService.update(p);
         });
 
         return Sale.toSaleResponse(savedSale);
