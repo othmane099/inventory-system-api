@@ -2,7 +2,6 @@ package com.ombdev.inventorysystemapi.controller;
 
 import com.ombdev.inventorysystemapi.model.SortBy;
 import com.ombdev.inventorysystemapi.request.DeleteRequest;
-import com.ombdev.inventorysystemapi.request.ShowRequest;
 import com.ombdev.inventorysystemapi.request.sale.SaleRequest;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.sale.SaleResponse;
@@ -19,6 +18,11 @@ public class SaleController {
 
     private final SaleService saleService;
 
+    @GetMapping("/seller/sales/show")
+    public SaleResponse show(@RequestParam("sid") Long saleId){
+        return saleService.show(saleId);
+    }
+
     @GetMapping("/seller/sales")
     public Page<SaleResponse> index(@RequestParam String keyword,
                                     @RequestParam int page,
@@ -29,12 +33,8 @@ public class SaleController {
 
     @PostMapping("/seller/sales/store")
     public SaleResponse store(@RequestBody SaleRequest request){
+        System.out.println(request);
         return saleService.store(SaleRequest.toEntity(request));
-    }
-
-    @GetMapping("/seller/sales/show")
-    public SaleResponse show(@RequestBody ShowRequest request){
-        return saleService.show(request.id());
     }
 
     @DeleteMapping("/seller/sales/delete")

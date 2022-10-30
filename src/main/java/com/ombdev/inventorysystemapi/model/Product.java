@@ -37,8 +37,6 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new TreeSet<>();
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Sale> sales = new HashSet<>();
 
     public static ProductResponse toProductResponse(Product product){
         if (product == null) return null;

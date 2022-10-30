@@ -30,12 +30,8 @@ public class Sale {
     @Column(updatable = false)
     private LocalDateTime created_at;
 
-    @ManyToMany
-    @JoinTable(
-            name = "sale_product",
-            joinColumns = @JoinColumn(name = "sale_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products = new TreeSet<>();
+    @OneToMany(mappedBy="sale")
+    private Set<SoldProduct> soldProducts = new TreeSet<>();
 
     @ManyToOne
     private Customer customer;
@@ -49,9 +45,9 @@ public class Sale {
                 sale.getTotalPrice(),
                 sale.getPaymentMethod(),
                 sale.getCreated_at(),
-                sale.getProducts() != null ?
-                        sale.getProducts().stream()
-                                .map(Product::toProductResponse)
+                sale.getSoldProducts() != null ?
+                        sale.getSoldProducts().stream()
+                                .map(SoldProduct::toSoldProductResponse)
                                 .collect(Collectors.toSet()) : null,
                 Customer.toCustomerResponse(sale.getCustomer())
 

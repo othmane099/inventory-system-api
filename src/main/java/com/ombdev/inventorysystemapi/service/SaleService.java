@@ -1,8 +1,10 @@
 package com.ombdev.inventorysystemapi.service;
 
 import com.ombdev.inventorysystemapi.model.Sale;
+import com.ombdev.inventorysystemapi.model.SoldProduct;
 import com.ombdev.inventorysystemapi.model.SortBy;
 import com.ombdev.inventorysystemapi.repository.SaleRepository;
+import com.ombdev.inventorysystemapi.repository.SoldProductRepository;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.sale.SaleResponse;
 import com.ombdev.inventorysystemapi.utils.Constants;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class SaleService {
 
     private final SaleRepository saleRepository;
+    private final SoldProductRepository soldProductRepository;
 
     public Page<SaleResponse> index(String keyword, int page, int size, SortBy sortBy){
 
@@ -32,15 +35,19 @@ public class SaleService {
                 .map(Sale::toSaleResponse)
                 .collect(Collectors.toList());
 
-        System.out.println(sales.size());
-
         return new PageImpl<>(sales, PageRequest.of(page, size), salesPage.getTotalElements());
     }
 
     public SaleResponse store(Sale sale){
         int randomNumber = new Random().nextInt(9000) + 1000;
         sale.setSaleCode("s"+ randomNumber);
-        return Sale.toSaleResponse(saleRepository.save(sale));
+        Sale savedSale = saleRepository.save(sale);
+        sale.getSoldProducts().forEach(sp -> {
+            sp.setSale(savedSale);
+            soldProductRepository.save(sp);
+        });
+
+        return Sale.toSaleResponse(savedSale);
     }
 
     public SaleResponse show(Long id){
