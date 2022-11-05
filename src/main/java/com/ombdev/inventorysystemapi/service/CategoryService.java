@@ -1,21 +1,27 @@
 package com.ombdev.inventorysystemapi.service;
 
+import com.ombdev.inventorysystemapi.exception.InventorySystemException;
 import com.ombdev.inventorysystemapi.model.Category;
+import com.ombdev.inventorysystemapi.model.ErrorCode;
 import com.ombdev.inventorysystemapi.model.SortBy;
 import com.ombdev.inventorysystemapi.repository.CategoryRepository;
 import com.ombdev.inventorysystemapi.response.DeleteResponse;
 import com.ombdev.inventorysystemapi.response.category.CategoryResponse;
+import com.ombdev.inventorysystemapi.validator.CategoryValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -51,6 +57,14 @@ public class CategoryService {
     }
 
     public CategoryResponse store(Category category){
+        List<String> errors = CategoryValidator.validate(category);
+        if (!errors.isEmpty())
+            throw new InventorySystemException("Category is not valid", ErrorCode.CATEGORY_NOT_VALID, errors);
+        Optional<Category> categoryTemp = categoryRepository.findByCategoryCode(category.getCategoryCode());
+        if (categoryTemp.isPresent())
+            throw new InventorySystemException(
+                    "this code="+category.getCategoryCode()+" is used with another category, it should be unique!",
+                    ErrorCode.CATEGORY_ALREADY_IN_USE);
         return Category.toCategoryResponse(categoryRepository.save(category));
     }
 
