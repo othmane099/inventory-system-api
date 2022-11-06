@@ -69,15 +69,21 @@ public class CategoryService {
     }
 
     public CategoryResponse show(Long id){
-        Category category = categoryRepository.findById(id).get();
-        return Category.toCategoryResponse(category);
+        if (id == null) throw new InventorySystemException("ID should not be null", ErrorCode.NULL_ID);
+        Optional<Category> category = categoryRepository.findById(id);
+        category.orElseThrow(() -> new InventorySystemException("Category with ID="+id+" Not Found", ErrorCode.CATEGORY_NOT_FOUND));
+        return Category.toCategoryResponse(category.get());
     }
 
     public CategoryResponse update(Category category){
+        List<String> errors = CategoryValidator.validate(category);
+        if (!errors.isEmpty())
+            throw new InventorySystemException("Category is not valid", ErrorCode.CATEGORY_NOT_VALID, errors);
         return Category.toCategoryResponse(categoryRepository.save(category));
     }
 
     public DeleteResponse destroy(Long id){
+        if (id == null) throw new InventorySystemException("ID should not be null", ErrorCode.NULL_ID);
         categoryRepository.deleteById(id);
         return new DeleteResponse("Category deleted successfully :)");
     }
